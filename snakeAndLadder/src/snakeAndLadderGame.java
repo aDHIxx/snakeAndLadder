@@ -56,16 +56,23 @@ public class snakeAndLadderGame {
                 break;
             case 1:
                 System.out.println("Ladder! Player moves ahead by " + diceRoll + " positions.");
-                currentPosition += diceRoll;
-                if (currentPosition > 100) {
-                    currentPosition = 200 - currentPosition; // Player bounces back from position 200
+
+                // Calculate the potential new position
+                int potentialPosition = currentPosition + diceRoll;
+
+                if (potentialPosition <= 100) {
+                    // If the potential position is within or at the winning position, update normally
+                    currentPosition = potentialPosition;
+                } else {
+                    // If the potential position exceeds the winning position, stay in the same previous position
+                    System.out.println("Overshoots 100! No moves to be taken.");
                 }
                 break;
             case 2:
                 System.out.println("Snake! Player moves behind by " + diceRoll + " positions.");
                 currentPosition -= diceRoll;
                 if (currentPosition < 0) {
-                    currentPosition = 0; // Player restarts from 0 if position goes below 0
+                    currentPosition = 0; // If the player position goes below 0, stay at 0
                 }
                 break;
         }
@@ -73,4 +80,5 @@ public class snakeAndLadderGame {
         System.out.println("New Position: " + currentPosition);
         return currentPosition;
     }
+
 }
