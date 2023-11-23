@@ -7,16 +7,21 @@ public class snakeAndLadderGame {
         int initialPos = 0;
         System.out.println("Player initial position is: " + initialPos);
 
-        // roll the dice  --> rollDie() method
-        int diceRoll = rollDie();
-        System.out.println("Dice Roll: " + diceRoll);
+        // Repeat the game until the player reaches the winning position
+        while (initialPos < 100) {
+            // Roll the dice
+            int diceRoll = rollDie();
+            System.out.println("Dice Roll: " + diceRoll);
 
-        // Check for Options No Play, Ladder, or Snake checkOption() method
-        int option = checkOption();
-        System.out.println("Option: " + option);
+            // Check for Options No Play, Ladder, or Snake
+            int option = checkOption();
+            System.out.println("Option: " + option);
 
-        // Update player position based on the option
-        updatePosition(initialPos, diceRoll, option);
+            // Update player position based on the option
+            initialPos = updatePosition(initialPos, diceRoll, option);
+        }
+
+        System.out.println("You have won! You've reached the winning position: " + initialPos);
     }
 
     /*
@@ -42,8 +47,9 @@ public class snakeAndLadderGame {
      * @name: updatePosition
      * @desc: Updates player position based on the option (No Play, Ladder, or Snake).
      * @param: currentPosition, diceRoll, option
+     * @return: updated position
      */
-    private static void updatePosition(int currentPosition, int diceRoll, int option) {
+    private static int updatePosition(int currentPosition, int diceRoll, int option) {
         switch (option) {
             case 0:
                 System.out.println("No Play.");
@@ -52,19 +58,19 @@ public class snakeAndLadderGame {
                 System.out.println("Ladder! Player moves ahead by " + diceRoll + " positions.");
                 currentPosition += diceRoll;
                 if (currentPosition > 100) {
-                    currentPosition = 100 - currentPosition; // Player cannot go above position 100
+                    currentPosition = 200 - currentPosition; // Player bounces back from position 200
                 }
                 break;
             case 2:
                 System.out.println("Snake! Player moves behind by " + diceRoll + " positions.");
                 currentPosition -= diceRoll;
                 if (currentPosition < 0) {
-                    currentPosition = 0; // Player cannot go below position 0
+                    currentPosition = 0; // Player restarts from 0 if position goes below 0
                 }
                 break;
         }
 
         System.out.println("New Position: " + currentPosition);
+        return currentPosition;
     }
-
 }
