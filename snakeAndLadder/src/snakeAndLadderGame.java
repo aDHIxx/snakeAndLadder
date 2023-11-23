@@ -2,31 +2,46 @@ import java.util.Random;
 
 public class snakeAndLadderGame {
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Snake and Ladder Game");
-        int initialPos = 0;
-        System.out.println("Player initial position is: " + initialPos);
-        int diceRollCount = 0; // Counter to track the number of times the dice is rolled
 
+        public static void main (String[]args){
+            System.out.println("Welcome to Snake and Ladder Game");
+            int targetPosition = 100;
 
-        // Repeat the game until the player reaches the winning position
-        while (initialPos < 100) {
-            // Roll the dice
-            int diceRoll = rollDie();
-            diceRollCount++;
-            System.out.println("Dice Roll: " + diceRoll);
+            int player1Pos = 0;
+            int player2Pos = 0;
 
-            // Check for Options No Play, Ladder, or Snake
-            int option = checkOption();
-            System.out.println("Option: " + option);
+            int currentPlayer = 1; // 1 for Player 1, 2 for Player 2
 
-            // Update player position based on the option
-            initialPos = updatePosition(initialPos, diceRoll, option);
+            while (player1Pos < targetPosition && player2Pos < targetPosition) {
+                int diceRoll = rollDie();
+                System.out.println("Dice Roll: " + diceRoll);
+
+                int option = checkOption();
+                System.out.println("Option: " + option);
+
+                if (currentPlayer == 1) {
+                    player1Pos = updatePosition(player1Pos, diceRoll, option);
+                    System.out.println("Player 1's Position: " + player1Pos);
+                } else {
+                    player2Pos = updatePosition(player2Pos, diceRoll, option);
+                    System.out.println("Player 2's Position: " + player2Pos);
+                }
+
+                // Check for ladder and allow the player to play again
+                if (option == 1) {
+                    System.out.println("You got a ladder ! PLayer "+currentPlayer+" play again!!.");
+                } else {
+                    // Switch to the next player
+                    currentPlayer = (currentPlayer == 1) ? 2 : 1;
+                }
+            }
+
+            if (player1Pos >= targetPosition) {
+                System.out.println("Player 1 won the game!");
+            } else {
+                System.out.println("Player 2 won the game!");
+            }
         }
-
-        System.out.println("You have won! You've reached the winning position: " + initialPos);
-        System.out.println("Number of times the dice was rolled to each 100: " + diceRollCount);
-    }
 
     /*
      * @name: rollDie
