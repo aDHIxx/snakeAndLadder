@@ -6,11 +6,14 @@ public class snakeAndLadderGame {
         System.out.println("Welcome to Snake and Ladder Game");
         int initialPos = 0;
         System.out.println("Player initial position is: " + initialPos);
+        int diceRollCount = 0; // Counter to track the number of times the dice is rolled
+
 
         // Repeat the game until the player reaches the winning position
         while (initialPos < 100) {
             // Roll the dice
             int diceRoll = rollDie();
+            diceRollCount++;
             System.out.println("Dice Roll: " + diceRoll);
 
             // Check for Options No Play, Ladder, or Snake
@@ -22,6 +25,7 @@ public class snakeAndLadderGame {
         }
 
         System.out.println("You have won! You've reached the winning position: " + initialPos);
+        System.out.println("Number of times the dice was rolled to each 100: " + diceRollCount);
     }
 
     /*
